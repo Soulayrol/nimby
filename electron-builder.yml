@@ -1,0 +1,4 @@
+appId: com.example.NimbyApp
+publish:
+  provider: github
+  token: '%env(string:GH_TOKEN)%'

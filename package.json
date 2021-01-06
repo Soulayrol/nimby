@@ -1,38 +1,56 @@
 {
-  "name": "nimby",
+  "name": "nimbyApp",
   "version": "0.1.0",
-  "private": true,
+  "author": "",
+  "license": "MIT",
+  "description": "Nimby app use in ArtFx. Use tractor nimby",
+  "main": "./src/electron.js",
+  "homepage": "./",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.1",
+    "electron-updater": "^4.3.5",
+    "find-process": "^1.4.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
+    "react-scripts": "4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "electron": "electron .",
+    "react-build": "react-scripts build",
+    "electron-build": "electron-builder",
+    "dev": "concurrently \"npm run start\" \"wait-on http://localhost:3000 && electron .\"",
+    "build": "npm run react-build && electron-builder build --win --publish never",
+    "deploy": "npm run react-build && electron-builder build --win --publish always"
+  },
+  "build": {
+    "productName": "Nimby ArtFx",
+    "extraFiles": [
+      {
+        "from": "./resources",
+        "to": "./resources",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Soulayrol/nimby.git"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "react-app"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "electron": "^11.1.1",
+    "electron-builder": "^22.9.1",
+    "wait-on": "^5.2.1"
   }
 }

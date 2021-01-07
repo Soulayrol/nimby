@@ -1,4 +1,4 @@
-appId: com.example.NimbyApp
+appId: com.electron.NimbyApp
 publish:
   provider: github
   token: '%env(string:GH_TOKEN)%'

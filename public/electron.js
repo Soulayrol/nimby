@@ -7,7 +7,7 @@ const axios = require('axios');
 var CONFIG = require('./config.json');
 
 const isDev = require('electron-is-dev'); 
-const iconDirPath = path.join(path.dirname(__dirname), 'resources', 'images')
+const iconDirPath = path.join(__dirname, 'images')
 
 // Window default value
 let mainWindow;
@@ -20,9 +20,11 @@ const panelSize = {
 }
 
 // Update check 15 min 
-setInterval(() => {
-  autoUpdater.checkForUpdates()
-}, 60000 * 15);
+if(!isDev) {
+  setInterval(() => {
+    autoUpdater.checkForUpdates()
+  }, 60000 * 15);
+}
 
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
   autoUpdater.quitAndInstall();
@@ -133,10 +135,10 @@ function createPanel(toggleOnLoad = false) {
     minimizable: false,
     webPreferences: { nodeIntegration: true }
   });
-  // loadURL
-  mainWindow.loadFile(
+
+  mainWindow.loadURL(
     // "http://localhost:3000/"
-    isDev ? 'index.html' : `file://${path.join(__dirname, "../build/index.html")}`
+    isDev ? `file://${path.join(__dirname, "index.html")}` : `file://${path.join(__dirname, "../build/index.html")}`
   );
   mainWindow.on("closed", () => (mainWindow = null));
 
@@ -162,7 +164,7 @@ function createPanel(toggleOnLoad = false) {
 
 function createTray() {
   if (tray != null) return false;
-  tray = new Tray(path.join(iconDirPath, "artfx.ico"))
+  tray = new Tray(path.join(iconDirPath, "artfx.png"))
   tray.setToolTip("Nimby" + (isDev ? "(Dev)" : ""))
   tray.on("click", () => toggleTray())
   tray.on("right-click", () => toggleTray())
@@ -193,7 +195,6 @@ function showPanel(show = true) {
 }
 
 app.on("ready", () => {
-  autoUpdater.checkForUpdates()
   createTray()
   createPanel()
   checkForProcess()

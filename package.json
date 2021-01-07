@@ -1,13 +1,14 @@
 {
   "name": "nimbyApp",
   "version": "0.1.0",
-  "author": "",
+  "author": "ArtFX TD Dev",
   "license": "MIT",
   "description": "Nimby app use in ArtFx. Use tractor nimby",
-  "main": "./src/electron.js",
+  "main": "./public/electron.js",
   "homepage": "./",
   "dependencies": {
     "axios": "^0.21.1",
+    "electron-is-dev": "^1.2.0",
     "electron-updater": "^4.3.5",
     "find-process": "^1.4.4",
     "react": "^17.0.1",
@@ -25,15 +26,9 @@
   },
   "build": {
     "productName": "Nimby ArtFx",
-    "extraFiles": [
-      {
-        "from": "./resources",
-        "to": "./resources",
-        "filter": [
-          "**/*"
-        ]
-      }
-    ]
+    "win": {
+      "icon": "build/app.ico"
+    }
   },
   "repository": {
     "type": "git",
